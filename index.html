@@ -371,7 +371,7 @@ Bu mesajın her kelimesine kocaman bir sarılma sakladım.
   </span>
   <br>
   <span style="color:#d9b7ca;font-size:12px;letter-spacing:1px;">
-   mert yılıdırım ve Tüm kardeşleri adına düzenlenmiştir. 💗
+    Tüm kardeşleri adına düzenlenmiştir. 💗
   </span>
 </footer>
 
@@ -418,15 +418,63 @@ setTimeout(()=>h.remove(),9500);
 
 setInterval(floatingHeart,650);
 
-/* Sarılma butonu */
+/* Sarılma butonu: ekranda büyük kalp göster */
 document.getElementById("hugBtn").addEventListener("click",()=>{
-for(let i=0;i<24;i++){
-setTimeout(floatingHeart,i*70);
-}
-document.querySelector(".letter").scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
+    for(let i=0;i<24;i++){
+        setTimeout(floatingHeart,i*70);
+    }
+
+    const bigHeart = document.createElement("div");
+    bigHeart.innerHTML = `
+        <div style="
+            font-size:clamp(130px,35vw,240px);
+            color:#ff4fa3;
+            text-shadow:0 0 25px #ff1687,0 0 65px #ff1687;
+            animation:bigHeartBeat 0.8s ease-in-out infinite alternate;
+            line-height:1.2;
+        ">♥</div>
+        <div style="
+            color:#ffacd2;
+            font-family:'Great Vibes',cursive;
+            font-size:clamp(30px,7vw,48px);
+            margin-top:10px;
+        ">Seni çok seviyorum anneciğim 💗</div>
+    `;
+
+    bigHeart.id = "bigHeartPopup";
+
+    bigHeart.style.cssText = `
+        position:fixed;
+        inset:0;
+        z-index:9999;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding:20px;
+        background:rgba(8,5,9,0.94);
+        cursor:pointer;
+        animation:appear 0.5s ease;
+    `;
+
+    if(!document.getElementById("bigHeartStyle")){
+        const style = document.createElement("style");
+        style.id = "bigHeartStyle";
+        style.textContent = `
+            @keyframes bigHeartBeat {
+                from { transform:scale(0.85); }
+                to { transform:scale(1.08); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    bigHeart.addEventListener("click",()=>{
+        bigHeart.remove();
+    });
+
+    document.body.appendChild(bigHeart);
 });
 </script>
 
